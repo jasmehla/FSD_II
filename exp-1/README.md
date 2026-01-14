@@ -1,16 +1,94 @@
-# React + Vite
+# Experiment 1 – React Single Page Application (Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This experiment demonstrates the creation of a **Single Page Application (SPA)** using **React** and **Vite**. It is part of the **Full Stack Development II (FSD II)** coursework and focuses on understanding core React concepts and modern frontend tooling.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Objective
 
-## React Compiler
+* To understand React project setup using Vite
+* To learn component-based architecture
+* To implement JSX and basic state management
+* To structure a React application properly
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Concepts Covered
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* React Functional Components
+* JSX Syntax
+* `useState` Hook
+* Component Reusability
+* Single Page Application (SPA)
+* Vite Development Server
+
+---
+
+## 🛠 Tech Stack
+
+* **React**
+* **Vite**
+* **JavaScript (ES6)**
+* **HTML5**
+* **CSS3**
+* **Node.js & npm**
+
+---
+
+## Folder Structure
+
+```
+exp-1
+│
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── App.jsx
+│   ├── App.css
+│   ├── main.jsx
+│   └── index.css
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## How to Run the Project
+
+1. Open terminal in the `exp-1` folder
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+4. Open the browser and visit:
+
+   ```
+   http://localhost:5173
+   ```
+
+---
+
+## Output
+
+* Displays a React Single Page Application
+* Uses reusable components
+* Demonstrates basic state handling
+
+---
+
+## Author
+
+**Jasmeen**
+
+---
+
+End of Experiment 1
