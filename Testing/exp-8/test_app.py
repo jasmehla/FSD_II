@@ -5,8 +5,8 @@ from app import app
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
-    app.students = []  # reset data
     with app.test_client() as client:
+        app.students = []
         yield client
 
 
@@ -16,13 +16,15 @@ def test_create_student(client):
 
 
 def test_get_students(client):
-    client.post('/students', json={"name": "Aditya"})
+    app.students = []
+    client.post('/students', json={"name": "Jasmeen"})
     response = client.get('/students')
     assert response.status_code == 200
     assert len(response.get_json()) == 1
 
 
 def test_update_student(client):
+    app.students = []
     client.post('/students', json={"name": "Old"})
     response = client.put('/students/1', json={"name": "New"})
     assert response.status_code == 200
@@ -30,6 +32,7 @@ def test_update_student(client):
 
 
 def test_delete_student(client):
+    app.students = []
     client.post('/students', json={"name": "Delete"})
     response = client.delete('/students/1')
     assert response.status_code == 200
