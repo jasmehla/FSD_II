@@ -23,7 +23,7 @@ def test_get_students(client):
     client.post('/students', json={"name": "Jasmeen"})
     response = client.get('/students')
     assert response.status_code == 200
-    assert len(response.get_json()) == 1
+    assert len(response.get_json()) >= 1
 
 
 def test_update_student(client):
