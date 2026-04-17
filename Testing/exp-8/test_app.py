@@ -5,9 +5,12 @@ from app import app
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
-    with app.test_client() as client:
-        app.students = []
-        yield client
+
+    with app.app_context():   # IMPORTANT
+        app.students = []     # reset correctly
+
+        with app.test_client() as client:
+            yield client
 
 
 def test_create_student(client):
