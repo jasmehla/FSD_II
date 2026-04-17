@@ -1,53 +1,35 @@
-from flask import Blueprint, request, current_app
-
-student_bp = Blueprint('student', __name__)
-
-# Create Student
-@student_bp.route('/students', methods=['POST'])
-def create_student():
-    data = request.get_json()
-    
-    if not data or 'name' not in data:
-        return {"error": "Name is required"}, 400
-
-    students = current_app.students
-
-    new_student = {
-        "id": len(students) + 1,
-        "name": data['name']
-    }
-
-    students.append(new_student)
-    return new_student, 201
+import pytest
+from app import app
 
 
-# Get All Students
-@student_bp.route('/students', methods=['GET'])
-def get_students():
-    return current_app.students, 200
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    app.students = []  # reset data
+    with app.test_client() as client:
+        yield client
 
 
-# Update Student
-@student_bp.route('/students/<int:id>', methods=['PUT'])
-def update_student(id):
-    students = current_app.students
-
-    for student in students:
-        if student['id'] == id:
-            student['name'] = request.get_json().get('name', student['name'])
-            return student, 200
-
-    return {"error": "Student not found"}, 404
+def test_create_student(client):
+    response = client.post('/students', json={"name": "Aditya"})
+    assert response.status_code == 201
 
 
-# Delete Student
-@student_bp.route('/students/<int:id>', methods=['DELETE'])
-def delete_student(id):
-    students = current_app.students
+def test_get_students(client):
+    client.post('/students', json={"name": "Aditya"})
+    response = client.get('/students')
+    assert response.status_code == 200
+    assert len(response.get_json()) == 1
 
-    for student in students:
-        if student['id'] == id:
-            students.remove(student)
-            return {"message": "Student deleted"}, 200
 
-    return {"error": "Student not found"}, 404
+def test_update_student(client):
+    client.post('/students', json={"name": "Old"})
+    response = client.put('/students/1', json={"name": "New"})
+    assert response.status_code == 200
+    assert response.get_json()['name'] == "New"
+
+
+def test_delete_student(client):
+    client.post('/students', json={"name": "Delete"})
+    response = client.delete('/students/1')
+    assert response.status_code == 200
