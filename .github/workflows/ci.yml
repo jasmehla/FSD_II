@@ -1,0 +1,63 @@
+name: Fullstack Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+
+  backend-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Testing/exp-8
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run backend tests
+        run: |
+          source venv/bin/activate
+          pytest
+
+  frontend-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Testing/exp6
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          # Adding caching helps speed up runs and prevents some fetch errors
+          cache: 'npm'
+          cache-dependency-path: Testing/exp6/package-lock.json
+
+      - name: Install dependencies
+        # Use 'npm ci' for automated environments (Clean Install)
+        # If that still fails, we force the architecture
+        run: |
+          npm ci || (rm -rf node_modules package-lock.json && npm install)
+
+      - name: Run frontend tests
+        run: npx vitest run
